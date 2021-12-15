@@ -1,0 +1,36 @@
+.profile-img {
+    width: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 2rem;
+
+    @media (max-width: 414px) {
+        padding: 0.5rem;
+    }
+}
+
+.word-wrap {
+    overflow-wrap: break-word;
+}
+
+.info-board {
+    display: flex;
+    justify-content: space-between;
+
+    .info-board-item {
+        display: flex;
+        flex-direction: column;
+        p {
+            text-align: center;
+            margin-right: 0.25rem;
+            margin-left: 0.25rem;
+        }
+    }
+
+    @media (max-width: 414px) {
+        flex-direction: column;
+        .info-board-item {
+            flex-direction: row;
+        }
+    }
+}
