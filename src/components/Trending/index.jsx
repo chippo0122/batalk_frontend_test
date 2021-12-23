@@ -1,12 +1,25 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
+
+import { useDispatch, useSelector } from 'react-redux';
+import { requestTags } from '../../redux/tags';
+import { setLoadingStatus } from '../../redux/loadingStatus';
 
 import Tag from './Tag'
 
 export default function Trending(props) {
-    const {getTags, tags, currentTag} = props;
+    //redux
+    const dispatch = useDispatch();
+    const tags = useSelector(state => state.tags.items);
 
     useEffect(() => {
-        getTags()
+        const initData = async () => {
+            dispatch(setLoadingStatus(true));
+            const res = await dispatch(requestTags());
+            if (res) {
+                dispatch(setLoadingStatus(false))
+            }
+        }
+        initData();
     }, []);
 
     return (
@@ -14,16 +27,13 @@ export default function Trending(props) {
             <h2 className='fs-2 text-dark'>Trending</h2>
             <div className='tags-sec'>
                 {
-                    tags ?
-                    tags.map(el => {
-                        return (
-                            <Tag getTags={getTags}
-                                 currentTag={currentTag}
-                                 key={el.name}
-                            >{el.name}</Tag>
-                        )
-                    }) :
-                    ''
+                    tags.length > 0 ?
+                        tags.map(el => {
+                            return (
+                                <Tag key={el.name}>{el.name}</Tag>
+                            )
+                        }) :
+                        ''
                 }
             </div>
         </div>
